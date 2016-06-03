@@ -1,20 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
-    int source;
-    int target;
+typedef struct graph_edge_st {
+    struct graph_node_st *source;
+    struct graph_node_st *target;
     int available;
     int used;
 } graph_edge_t;
 
-typedef struct {
+typedef struct graph_node_st {
     int number;
     int edge_count;
     graph_edge_t *edges;
 } graph_node_t;
 
-typedef struct {
+typedef struct graph_st {
     int node_count;
     graph_node_t *nodes;
 } graph_t;
@@ -66,8 +66,8 @@ void process_input(graph_t *graph)
                 edge_available
         );
 
-        source->edges[source->edge_count].source = edge_source;
-        source->edges[source->edge_count].target = edge_target;
+        source->edges[source->edge_count].source = &graph->nodes[edge_source - 1];
+        source->edges[source->edge_count].target = &graph->nodes[edge_target - 1];
         source->edges[source->edge_count].available = edge_available;
         source->edges[source->edge_count].used = 0;
         source->edge_count++;
@@ -100,3 +100,4 @@ void max_flow(const graph_t *const graph, const graph_node_t *const start, const
 {
     //
 }
+
