@@ -31,7 +31,7 @@ int main(void)
     process_input(&graph);
 
     graph_node_t *start = &graph.nodes[0];
-    graph_node_t *end = &graph.nodes[graph.node_count];
+    graph_node_t *end = &graph.nodes[graph.node_count - 1];
     max_flow(&graph, start, end);
 
     destroy_graph(&graph);
