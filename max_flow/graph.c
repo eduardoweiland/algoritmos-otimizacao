@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "graph.h"
 
@@ -27,11 +28,33 @@ void graph_destroy(graph_t *graph)
     free(graph->nodes);
 }
 
-void graph_add_edge(graph_node_t *source, graph_node_t *target, int available, int used)
+void graph_add_edge(graph_node_t *source, graph_node_t *target, int available)
 {
-    source->edges[source->edge_count].source = source;
+    int i;
+
+	source->edges[source->edge_count].source = source;
     source->edges[source->edge_count].target = target;
     source->edges[source->edge_count].available = available;
-    source->edges[source->edge_count].used = used;
-    source->edge_count++;
+    source->edges[source->edge_count].used = 0;
+
+    // Adiciona aresta inversa
+    for (i = 0; i < target->edge_count; ++i) {
+    	if (target->edges[i].target == source) {
+    		break;
+    	}
+    }
+
+    if (i == target->edge_count) {
+    	target->edges[i].source = target;
+    	target->edges[i].target = source;
+    	target->edge_count++;
+    }
+
+	target->edges[i].used = available;
+    source->edges[source->edge_count].used = target->edges[i].available;
+
+    target->edges[i].inverse = &source->edges[source->edge_count];
+    source->edges[source->edge_count].inverse = &target->edges[i];
+
+	source->edge_count++;
 }

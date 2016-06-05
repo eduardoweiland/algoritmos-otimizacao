@@ -34,6 +34,9 @@ int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrac
         for (trace = backtrace; trace != NULL; trace = trace->previous) {
             trace->edge->available -= backtrace->max;
             trace->edge->used += backtrace->max;
+
+            trace->edge->inverse->available += backtrace->max;
+            trace->edge->inverse->used -= backtrace->max;
         }
         return 0;
     }
