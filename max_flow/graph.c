@@ -27,3 +27,11 @@ void graph_destroy(graph_t *graph)
     free(graph->nodes);
 }
 
+void graph_add_edge(graph_node_t *source, graph_node_t *target, int available, int used)
+{
+    source->edges[source->edge_count].source = source;
+    source->edges[source->edge_count].target = target;
+    source->edges[source->edge_count].available = available;
+    source->edges[source->edge_count].used = used;
+    source->edge_count++;
+}

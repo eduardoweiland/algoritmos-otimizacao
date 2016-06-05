@@ -22,5 +22,6 @@ typedef struct graph_st {
 
 void graph_init(graph_t *graph, const int node_count, const int max_edges);
 void graph_destroy(graph_t *graph);
+void graph_add_edge(graph_node_t *source, graph_node_t *target, int available, int used);
 
 #endif /*  GRAPH_H_ */

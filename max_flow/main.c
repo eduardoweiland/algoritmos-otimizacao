@@ -35,12 +35,9 @@ void process_input(graph_t *graph)
         scanf("%d %d %d", &edge_source, &edge_target, &edge_available);
 
         graph_node_t *source = &graph->nodes[edge_source - 1];
+        graph_node_t *target = &graph->nodes[edge_target - 1];
 
-        source->edges[source->edge_count].source = &graph->nodes[edge_source - 1];
-        source->edges[source->edge_count].target = &graph->nodes[edge_target - 1];
-        source->edges[source->edge_count].available = edge_available;
-        source->edges[source->edge_count].used = 0;
-        source->edge_count++;
+        graph_add_edge(source, target, edge_available, 0);
     }
 }
 
