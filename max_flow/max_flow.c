@@ -5,6 +5,9 @@
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
+static int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrace);
+static int max_flow_result(graph_t *graph, graph_node_t *end);
+
 int max_flow(graph_t *graph, graph_node_t *start, graph_node_t *end)
 {
     int iteration = 1;
@@ -15,16 +18,7 @@ int max_flow(graph_t *graph, graph_node_t *start, graph_node_t *end)
         printf("============================\n");
     } while (max_flow_walk(start, end, NULL) == 0);
 
-    int max = 0, i, j;
-    for (i = 0; i < graph->node_count; ++i) {
-        for (j = 0; j < graph->nodes[i].edge_count; ++j) {
-            if (graph->nodes[i].edges[j].target == end) {
-                max += graph->nodes[i].edges[j].used;
-            }
-        }
-    }
-
-    return max;
+    return max_flow_result(graph, end);
 }
 
 int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrace)
@@ -110,3 +104,16 @@ int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrac
     return ret;
 }
 
+int max_flow_result(graph_t *graph, graph_node_t *end)
+{
+    int max = 0, i, j;
+    for (i = 0; i < graph->node_count; ++i) {
+        for (j = 0; j < graph->nodes[i].edge_count; ++j) {
+            if (graph->nodes[i].edges[j].target == end) {
+                max += graph->nodes[i].edges[j].used;
+            }
+        }
+    }
+
+    return max;
+}
