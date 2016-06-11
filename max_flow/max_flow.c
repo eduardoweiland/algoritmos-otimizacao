@@ -5,17 +5,26 @@
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
+static int verbose = 0;
+
 static int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrace);
 static int max_flow_result(graph_t *graph, graph_node_t *end);
+
+void max_flow_set_verbose(int flag)
+{
+    verbose = flag;
+}
 
 int max_flow(graph_t *graph, graph_node_t *start, graph_node_t *end)
 {
     int iteration = 1;
 
     do {
-        printf("\n============================\n");
-        printf("   Processando iteração %d\n", iteration++);
-        printf("============================\n");
+        if (verbose) {
+            printf("\n============================\n");
+            printf("   Processando iteração %d\n", iteration++);
+            printf("============================\n");
+        }
     } while (max_flow_walk(start, end, NULL) == 0);
 
     return max_flow_result(graph, end);
@@ -30,7 +39,10 @@ int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrac
     int i, best, ret = 0;
 
     if (start == end) {
-        printf("Chegou no destino transportando %d\n", backtrace->max);
+        if (verbose) {
+            printf("Chegou no destino transportando %d\n", backtrace->max);
+        }
+
         for (trace = backtrace; trace != NULL; trace = trace->previous) {
             trace->edge->available -= backtrace->max;
             trace->edge->used += backtrace->max;
@@ -48,7 +60,9 @@ int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrac
 
     next_candidate = candidates;
 
-    printf("\n");
+    if (verbose) {
+        printf("\n");
+    }
 
     for (i = 0; i < start->edge_count; ++i) {
         for (trace = backtrace; (trace != NULL) && (trace->node != start->edges[i].target); trace = trace->previous) {
@@ -67,7 +81,9 @@ int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrac
         next_to_follow = NULL;
 
         for (i = 0; candidates[i] != NULL; ++i) {
-            printf("Candidato: nodo %d com máximo de %d\n", candidates[i]->target->number, candidates[i]->available);
+            if (verbose) {
+                printf("Candidato: nodo %d com máximo de %d\n", candidates[i]->target->number, candidates[i]->available);
+            }
             if (((next_to_follow == NULL) && (candidates[i]->available > 0))
                     || ((next_to_follow != NULL) && (candidates[i]->available > next_to_follow->available))) {
                 next_to_follow = candidates[i];
@@ -76,7 +92,9 @@ int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrac
         }
 
         if (next_to_follow == NULL) {
-            printf("Sem caminho para seguir adiante, volta para nodo anterior\n");
+            if (verbose) {
+                printf("Sem caminho para seguir adiante, volta para nodo anterior\n");
+            }
             ret = 1;
             break;
         }
@@ -100,7 +118,9 @@ int max_flow_walk(graph_node_t *start, graph_node_t *end, flow_trace_t *backtrac
             step.max = MIN(backtrace->max, next_to_follow->available);
         }
 
-        printf("WALK de %d para %d com máximo de %d\n", next_to_follow->source->number, next_to_follow->target->number, step.max);
+        if (verbose) {
+            printf("WALK de %d para %d com máximo de %d\n", next_to_follow->source->number, next_to_follow->target->number, step.max);
+        }
     } while (max_flow_walk(next_to_follow->target, end, &step) != 0);
 
     free(candidates);

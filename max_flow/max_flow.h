@@ -11,5 +11,6 @@ typedef struct flow_trace_st {
 } flow_trace_t;
 
 int max_flow(graph_t *graph, graph_node_t *start, graph_node_t *end);
+void max_flow_set_verbose(int verbose);
 
 #endif /* MAX_FLOW_H_ */
