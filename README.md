@@ -14,6 +14,8 @@ O programa espera ler a configuração do grafo (nodos, arestas e valores) da en
 
     $ ./max_flow < /caminho/do/arquivo.txt
 
+A entrada para o programa deve ser fornecida em texto simples. A primeira linha da entrada deve conter três números inteiros positivos **N**, **A** e **M**, onde **N** é o número de nodos do grafo, **A** é o número de arestas ligando todos os nodos do grafo e **M** é o maior número de arestas ligadas a um único nodo do grafo. Em seguida, deve haver **A** linhas, cada uma representando uma aresta do grafo e contendo três números inteiros positivos **O** (1 <= O <= N), **D** (1 <= D <= N) e **V**, onde **O** é o número do nodo de origem da aresta, **D** é o número do nodo de destino e **V** é o valor disponível para transporte.
+
 A saída do programa é direcionada à saída padrão, e contém um log descrevendo todos os passos executados pelo algoritmo.
 
 
