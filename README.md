@@ -34,7 +34,7 @@ A saída do programa é direcionada à saída padrão. Por padrão, apenas o res
 
 ## TODO
 
-[ ] Makefiles para compilação dos programas
-[ ] Organizar saída do programa max\_flow (adicionar opção verbose)
-[ ] Descrever formatos dos arquivos de entrada utilizados
+- [ ] Makefiles para compilação dos programas
+- [ ] Organizar saída do programa max\_flow (adicionar opção verbose)
+- [ ] Descrever formatos dos arquivos de entrada utilizados
 
