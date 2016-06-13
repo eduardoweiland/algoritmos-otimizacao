@@ -34,9 +34,3 @@ A entrada para o programa deve ser fornecida em texto simples. A primeira linha 
 A saída do programa é direcionada à saída padrão. Por padrão, apenas o resultado final é exibido. Para visualizar todos os passos executados pelo algoritmo, pode ser informada a flag verbose **-v** na execução do programa:
 
     $ ./tsp -v < /caminho/do/arquivo.txt
-
-
-## TODO
-
-- [ ] Makefiles para compilação dos programas
-
